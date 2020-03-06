@@ -14,8 +14,12 @@ public class  HttpClientUtils {
     @Autowired
     private  HttpClient httpClient;
 
-    public  String execute() throws IOException {
-        String s = EntityUtils.toString(httpClient.execute(new HttpGet("http://www.taobao.com")).getEntity());
+    public  String execute(String key) throws IOException {
+        String url = GetUrlUtil.get(key);
+        if ("fail".equalsIgnoreCase(url)){
+            return "请求的URL不存在...";
+        }
+        String s = EntityUtils.toString(httpClient.execute(new HttpGet(url)).getEntity(),"UTF-8");
         return s;
     }
 }
